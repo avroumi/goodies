@@ -1,0 +1,15 @@
+services: 
+  app:
+    container_name: "goodies"
+    build: .
+    ports:
+        - "3013:3013"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
+volumes:
+  node_modules:
+    
