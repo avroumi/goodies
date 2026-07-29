@@ -5,7 +5,7 @@ import { supabase } from "./src/config/supabase.js";
 
 const PORT = process.env.PORT || 3013;
 
-createConnect();
+await createConnect();
 
 app.listen(PORT, () =>
   console.log(`welcome to goodies server in port ${PORT}`),

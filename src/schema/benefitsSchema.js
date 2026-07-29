@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const idSchema = z.object({
-  soldierId: z.coerce().number().int(),
+  soldierId: z.coerce.number().int(),
 });
 
 export const benefitsSchema = z.object({
@@ -23,4 +23,12 @@ export const diningHallSchema = z.object({
   baseId: z.number(),
   kosherLevel: z.string(),
   mealTimes: z.array(z.string()),
+});
+
+export const updateBenefitSchema = z.object({
+  benefitType: z.enum(["giftCard", "diningHall"]),
+  details: z.object(),
+  decisionReason: z.string(),
+  budgetApproved: z.boolean(),
+  decisionDate: z.optional(z.string()),
 });

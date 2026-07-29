@@ -20,6 +20,12 @@ export const getBenefitsById = async (soldierId) => {
   const benefit = await benefits.findOne({ soldierId: soldierId });
   return benefit;
 };
+
+export const updateBenefit = async (soldierId, updatedData) => {
+  const updated = await benefits.updateOne({ soldierId }, updatedData);
+  return updated.getModifiedCount();
+};
+
 // console.log(
 //   await createBenefits(
 //     1,

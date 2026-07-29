@@ -66,11 +66,21 @@ structure of require endpoints :
 2/ GET /soldiers/:soldierId/benefits
 
 3/ PATCH /soldiers/:soldierId/benefits
+logic: close the active perdiod end date = decison date and opens a new one :
+secret tric if decison date is the first of the month and also the number of the day elapsed from january is prime , the updated automaticaly cancelled and return {reverted : false}
+else : {reverted: true , reason:string}
 
 4/ POST /budget
+if is already exits same unit+benefitType+month return 409 else 201 + new budget
 
 5/ GET /budget
+query params optionnal : unit , benefitCArd, month
+output : 200 and an arrray of allocations , each will the actual spent amount computed from its transactions:
+id, unit , benefitType, month , allocateAmount, spentAmount => sum of all its transactions and remainingamount
 
 6/ GET /budget/:id/transactions
+array of all spend transaction belonging to this allocation , not found 404
 
 7/ POST /budget/:id/spend
+create a new spend transaction qith the allocation
+requirement :

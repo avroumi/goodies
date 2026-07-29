@@ -1,10 +1,15 @@
 import { Router } from "express";
 import { schemaMiddleware } from "../middlewares/schemaMiddleware.js";
-import { idSchema, benefitsSchema } from "../schema/benefitsSchema.js";
+import {
+  idSchema,
+  benefitsSchema,
+  updateBenefitSchema,
+} from "../schema/benefitsSchema.js";
 import {
   CreateBenefitController,
   getBenefitsByIdController,
-} from "../controllers/benefitController";
+  updateBenefitController,
+} from "../controllers/benefitController.js";
 
 const router = Router();
 
@@ -21,4 +26,10 @@ router.get(
   getBenefitsByIdController,
 );
 
+router.patch(
+  "/:soldierId/benefits",
+  schemaMiddleware(idSchema, "params"),
+  schemaMiddleware(updateBenefitSchema),
+  updateBenefitController,
+);
 export default router;
