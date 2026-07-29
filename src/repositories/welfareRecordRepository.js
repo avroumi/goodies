@@ -13,9 +13,13 @@ export const createBenefits = async (soldierId, firstData, secondData) => {
     ],
   });
 
-  return result.insertedId;
+  return result;
 };
 
+export const getBenefitsById = async (soldierId) => {
+  const benefit = await benefits.findOne({ soldierId: soldierId });
+  return benefit;
+};
 // console.log(
 //   await createBenefits(
 //     1,
@@ -31,3 +35,5 @@ export const createBenefits = async (soldierId, firstData, secondData) => {
 //     },
 //   ),
 // );
+
+// console.log(await getBenefitsById(3));
