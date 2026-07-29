@@ -13,3 +13,64 @@ Three tables need to be created:
 - The second and third tables are better suited to Supabase, given their fixed fields and implicit relationships.
 
 These choices may change, but this is my initial impression.
+
+scruture of database :
+1- welfare-record : => mongodb
+
+    id: ObjectId
+    soldierId: number
+    unit: string
+    currentBenefitType: "giftCard" || "diningHall"
+    history: BenefitPeriod[]
+
+    description of object BenefitPeriod:
+        {
+            startDate: string // ISO date
+            endDate: string || null // ISO date
+            decisionReason: string
+            budgetApproved: boolean
+            benefitType: "giftCard" || "diningHall"
+            details : {object} => if benefiType = giftCard => {
+                cardProvider: string
+                monthlyValue: number
+                validMerchants : [string]
+            }
+            if = diningHall => {
+                baseId: number
+                kosherLevel: string
+                mealTimes: [string]
+
+            }
+        }
+
+2- table budget-allocation : => supabase
+
+    id: int primary key
+    unit: string
+    benefitType : "giftCard" || "diningHall"
+    month: string // format "YYYY-MM"
+    allocatedAMount : int
+
+3- table spend-transaction: => supabasse
+
+    id: int primary key
+    budget_id : foreign key budget-allocation id
+    amount : int
+    reason: sring || null
+    createdAt : date
+
+structure of require endpoints :
+
+1/ POST /soldiers/:soldierId/benefits
+
+2/ GET /soldiers/:soldierId/benefits
+
+3/ PATCH /soldiers/:soldierId/benefits
+
+4/ POST /budget
+
+5/ GET /budget
+
+6/ GET /budget/:id/transactions
+
+7/ POST /budget/:id/spend
