@@ -23,3 +23,14 @@ export const getSameBudget = async (unit, benefitType, month) => {
   }
   return data;
 };
+
+export const getBudgettByid = async (budgetId) => {
+  const { data, error, status } = await budget
+    .select()
+    .eq("budgetId", budgetId);
+
+  if (error) {
+    throw new AppError(error.message, status);
+  }
+  return data;
+};
