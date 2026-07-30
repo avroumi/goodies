@@ -7,7 +7,7 @@ export const idSchema = z.object({
 export const benefitsSchema = z.object({
   unit: z.string(),
   benefitType: z.enum(["giftCard", "diningHall"]),
-  details: z.object(),
+  details: z.object({}).passthrough(),
   decisionReason: z.string(),
   budgetApproved: z.boolean(),
   startDate: z.optional(z.string()),
@@ -27,7 +27,7 @@ export const diningHallSchema = z.object({
 
 export const updateBenefitSchema = z.object({
   benefitType: z.enum(["giftCard", "diningHall"]),
-  details: z.object(),
+  details: z.object({}).passthrough(),
   decisionReason: z.string(),
   budgetApproved: z.boolean(),
   decisionDate: z.optional(z.string()),

@@ -13,7 +13,7 @@ export const createBenefits = async (soldierId, firstData, secondData) => {
     ],
   });
 
-  return result;
+  return await benefits.findOne({ _id: result.insertedId });
 };
 
 export const getBenefitsById = async (soldierId) => {
@@ -22,8 +22,11 @@ export const getBenefitsById = async (soldierId) => {
 };
 
 export const updateBenefit = async (soldierId, updatedData) => {
-  const updated = await benefits.updateOne({ soldierId }, updatedData);
-  return updated.getModifiedCount();
+  const updated = await benefits.updateOne(
+    { soldierId },
+    { $set: { updatedData } },
+  );
+  return updated.modifiedCount;
 };
 
 // console.log(

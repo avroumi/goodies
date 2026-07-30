@@ -6,3 +6,9 @@ export const createBudgetSChema = z.object({
   month: z.string(),
   allocatedAmount: z.number(),
 });
+
+export const querySchemaBudget = z.object({
+  unit: z.string().optional(),
+  month: z.string().optional(),
+  benefitType: z.string().optional(),
+});

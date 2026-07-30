@@ -5,7 +5,11 @@ import {
 } from "../repositories/welfareRecordRepository.js";
 import { giftCArdSchema, diningHallSchema } from "../schema/benefitsSchema.js";
 import { AppError } from "../utils/AppError.js";
-import { isPrime, currentDayThisYear } from "../utils/primeNumber.js";
+import {
+  isPrime,
+  currentDayThisYear,
+  firstDayInMount,
+} from "../utils/logicMonth.js";
 
 const createBenefitsService = async (soldierId, benefitsData) => {
   const soldierexist = await getBenefitsById(soldierId);
@@ -45,24 +49,28 @@ const updateBenefitService = async (soldierId, updatedData) => {
   const benefit = await getBenefitsByIdService(soldierId);
   const { decisionReason, benefitType, decisionDate, ...rest } = updatedData;
 
-  const daythisYear = currentDayThisYear(decisionDate);
-  if (isPrime(daythisYear)) {
-    return { reverted: false, message: "hehehhe" };
+  if (decisionDate) {
+    const daythisYear = currentDayThisYear(decisionDate);
+    if (isPrime(daythisYear) && firstDayInMount(decisionDate)) {
+      return { reverted: false, message: "hehehhe" };
+    }
   }
 
   if (benefitType === "giftCard") {
-    const resultSchema = giftCArdSchema.safeParse(benefitsData.details);
+    const resultSchema = giftCArdSchema.safeParse(updatedData.details);
     if (!resultSchema.success) {
       throw new AppError("details not compatible", 400);
     }
   }
   if (benefitType === "diningHall") {
-    const resultSchema = diningHallSchema.safeParse(benefitsData.details);
+    const resultSchema = diningHallSchema.safeParse(updatedData.details);
     if (!resultSchema.success) {
       throw new AppError("details not compatible", 400);
     }
   }
-  benefit.history[endDate] = new Date().toISOString();
+  benefit.history[benefit.history.length - 1].endDate = decisionDate
+    ? decisionDate
+    : new Date().toISOString();
   benefit.currentBenefitType = benefitType;
   benefit.history.push({
     startDate: new Date().toISOString(),
@@ -75,7 +83,7 @@ const updateBenefitService = async (soldierId, updatedData) => {
   const result = await updateBenefit(soldierId, benefit);
   return {
     reverted: result,
-    reason: decisionDate,
+    reason: decisionReason,
   };
 };
 

@@ -13,12 +13,11 @@ export const gettAlltransactionById = async (budgetId) => {
   return data;
 };
 
-console.log(await gettAlltransactionById(1));
-
 export const createTransaction = async (transactionData) => {
   const { data, error, status } = await transactionsTable
     .insert(transactionData)
-    .select();
+    .select()
+    .single();
 
   if (error) {
     throw new AppError(error.message, status);

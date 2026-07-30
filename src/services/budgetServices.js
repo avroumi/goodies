@@ -7,7 +7,7 @@ import { AppError } from "../utils/AppError.js";
 const createBudgetService = async (budgetData) => {
   const { unit, benefitType, month, ...rest } = budgetData;
   const duplicate = await getSameBudget(unit, benefitType, month);
-  if (duplicate.length > 1) {
+  if (duplicate.length > 0) {
     throw new AppError("duplicate budget not allowed", 409);
   }
   const budget = await createBudget({

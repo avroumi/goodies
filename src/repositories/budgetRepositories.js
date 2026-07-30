@@ -17,7 +17,8 @@ export const getSameBudget = async (unit, benefitType, month) => {
     .select()
     .eq("unit", unit)
     .eq("benefitType", benefitType)
-    .eq("month", month);
+    .eq("month", month)
+    .single();
   if (error) {
     throw new AppError(error.message, status);
   }
@@ -27,7 +28,8 @@ export const getSameBudget = async (unit, benefitType, month) => {
 export const getBudgettByid = async (budgetId) => {
   const { data, error, status } = await budget
     .select()
-    .eq("budgetId", budgetId);
+    .eq("id", budgetId)
+    .maybeSingle();
 
   if (error) {
     throw new AppError(error.message, status);
