@@ -9,7 +9,7 @@ import { gettAlltransactionById } from "../repositories/transactionRepository.js
 const createBudgetService = async (budgetData) => {
   const { unit, benefitType, month, ...rest } = budgetData;
   const duplicate = await getSameBudget(unit, benefitType, month);
-  if (duplicate.length > 0) {
+  if (duplicate) {
     throw new AppError("duplicate budget not allowed", 409);
   }
   const budget = await createBudget({

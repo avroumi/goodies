@@ -3,6 +3,7 @@ import service from "../../services/benefitsService.js";
 import { mock, describe, it, beforeEach } from "node:test";
 
 const mockData = {
+  unit: "8900",
   benefitType: "giftCard",
   details: { cardProvider: "jfh", monthlyValue: 7, validMerchants: ["hvs"] },
   decisionReason: "fghf",
@@ -38,3 +39,18 @@ describe("test getBeneficeById", () => {
 //     decisionDate: new Date().toString(),
 //   }),
 // );
+
+// {
+
+//   "benefitType": "giftCard",
+//   "details": { "cardProvider": "ouioui", "monthlyValue": 23, "validMerchants": ["hvs"] },
+//   "decisionReason": "hello",
+//   "budgetApproved": false
+// }
+
+// '{
+//   "benefitType": "giftCard",
+//   "details": { "cardProvider": "jfh", "monthlyValue": 7, "validMerchants": ["hvs"] },
+//   "decisionReason": "fghf",
+//   "budgetApproved": false
+// }'
