@@ -27,23 +27,5 @@ export const updateBenefit = async (soldierId, updatedData) => {
     { soldierId },
     { $set: { ...rest } },
   );
-  return await benefits.findOne(updated.insertedId);
+  return await benefits.findOne({ soldierId: soldierId });
 };
-
-// console.log(
-//   await createBenefits(
-//     1,
-//     { unit: "hello", benefitType: "giftCard" },
-//     {
-//       decisionReason: "oui",
-//       budgetApproved: true,
-//       details: {
-//         cardProvider: "hello",
-//         monthlyValue: 7,
-//         validMerchants: ["falafel"],
-//       },
-//     },
-//   ),
-// );
-
-// console.log(await getBenefitsById(3));
