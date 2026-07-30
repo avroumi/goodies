@@ -93,13 +93,3 @@ export default {
   getBenefitsByIdService,
   updateBenefitService,
 };
-
-// console.log(
-//   await updateBenefitService(1, {
-//     benefitType: "giftCard",
-//     details: { cardProvider: "jfh", monthlyValue: 7, validMerchants: ["hvs"] },
-//     decisionReason: "fghf",
-//     budgetApprived: false,
-//     decisionDate: new Date().toString(),
-//   }),
-// );
