@@ -1,5 +1,22 @@
 WELCOME TO THE GOODIES PROJECT :
 
+Project explanation:
+
+Major changes are taking place in the army; due to budget cuts, the decision was made to eliminate "goodies" and cut back on the mess hall.
+Fortunately, the resulting protests had an impact, and the Minister of the Interior decided to reverse course.
+You are tasked with creating a system that: 1) allows for future changes of mind; 2) calculates the budget for each unit to track real-time spending; and 3) limits instances of overspending.
+
+Database explanation:
+There are 3 databases:
+1/ MongoDB: stores the history of the Minister of the Interior's baffling decisions.
+Table name: benefits
+2/ Supabase: assigns a budget to each unit.
+Table name: budget-allocation
+3/ Supabase: handles transactions and links them to the specific unit.
+Table name: spend-transaction
+
+If things had been explained to me as clearly as they are in this README, I’d already be getting ready for Shabbat.
+
 Explanation regarding the choice of database:
 
 First, to understand my choice, it is necessary to grasp the difference between the two database options available to me (I will be working with cloud databases, not local ones):
@@ -61,26 +78,45 @@ scruture of database :
 
 structure of require endpoints :
 
-1/ POST /soldiers/:soldierId/benefits
+1/ POST /soldiers/:soldierId/benefits /completed
 
-2/ GET /soldiers/:soldierId/benefits
+    Assigns a list of details to a specific soldier and stores the record in the history log (refer to the table for details).
 
-3/ PATCH /soldiers/:soldierId/benefits
-logic: close the active perdiod end date = decison date and opens a new one :
-secret tric if decison date is the first of the month and also the number of the day elapsed from january is prime , the updated automaticaly cancelled and return {reverted : false}
-else : {reverted: true , reason:string}
+2/ GET /soldiers/:soldierId/benefits /completed
 
-4/ POST /budget
+    Retrieves all information for this soldier.
+
+3/ PATCH /soldiers/:soldierId/benefits /completed
+
+    Closes the current active period, opens a new one, and updates the `benefitType` as needed:
+    `projetSecret`: If it is the first of the month and the total number of days since January 1st is a prime number, we assume the boss doesn't want the status to change.
+    In this case, we return `reversed: true` and `reason: str` along with the soldier data (unchanged) and HTTP status 200; otherwise, we apply the change and return `reversed: false`.
+
+4/ POST /budget /completed
 if is already exits same unit+benefitType+month return 409 else 201 + new budget
 
-5/ GET /budget
-query params optionnal : unit , benefitCArd, month
-output : 200 and an arrray of allocations , each will the actual spent amount computed from its transactions:
-id, unit , benefitType, month , allocateAmount, spentAmount => sum of all its transactions and remainingamount
+5/ GET /budget / completed
+query params optional: unit, benefitCard, month
+output: 200 and an array of allocations, each will the actual spent amount computed from its transactions:
+id, unit, benefitType, month, allocateAmount, spentAmount => sum of all its transactions and remainingamount
 
-6/ GET /budget/:id/transactions
-array of all spend transaction belonging to this allocation , not found 404
+6/ GET /budget/:id/transactions /completed
+array of all spend transaction belonging to this allocation, not found 404
 
-7/ POST /budget/:id/spend
+7/ POST /budget/:id/spend /completed
 create a new spend transaction qith the allocation
-requirement :
+requirement:
+
+Regarding the overflow, it works like this:
+
+--> server.js -> routes -> schema -> controller -> service -> repositorie -> db
+
+Regarding the tests:
+I don't have time to test everything, so I'll focus on doing one of each type—specifically:
+
+utils
+repo
+controller
+and service
+
+Good luck for mee.
