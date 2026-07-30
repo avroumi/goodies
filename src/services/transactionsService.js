@@ -30,7 +30,7 @@ const createTransactionService = async (budgetId, transactionData) => {
     budget.allocatedAmount - (totalTransaction + transactionData.amount);
   if (remainingAmount < 0) {
     throw new AppError(
-      `error: you don't have more money : ${remainingAmount} `,
+      `error: you don't have more money : ${remainingAmount - transactionData.amount} `,
       400,
     );
   }
@@ -40,7 +40,7 @@ const createTransactionService = async (budgetId, transactionData) => {
   };
   const transaction = await createTransaction(safeTransaction);
 
-  return [transaction, remainingAmount];
+  return { transaction, remainingAmount };
 };
 
 export default { gettAlltransactionByIdService, createTransactionService };

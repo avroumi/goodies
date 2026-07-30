@@ -18,7 +18,7 @@ export const getSameBudget = async (unit, benefitType, month) => {
     .eq("unit", unit)
     .eq("benefitType", benefitType)
     .eq("month", month)
-    .single();
+    .maybeSingle();
   if (error) {
     throw new AppError(error.message, status);
   }

@@ -1,14 +1,15 @@
 import transactionService from "../services/transactionsService.js";
 
 export const createTransactionController = async (req, res, next) => {
+  const { id } = req.params;
   try {
     const success = await transactionService.createTransactionService(
-      req.params,
+      id,
       req.body,
     );
     res.status(201).json({
       transaction: success.transaction,
-      remainingAmount: sucess.remainingAmount,
+      remainingAmount: success.remainingAmount,
     });
   } catch (error) {
     next(error);
@@ -16,10 +17,9 @@ export const createTransactionController = async (req, res, next) => {
 };
 
 export const gettAlltransactionByIdController = async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const success = await transactionService.gettAlltransactionByIdService(
-      req.params,
-    );
+    const success = await transactionService.gettAlltransactionByIdService(id);
     res.status(200).json({ success });
   } catch (error) {
     next(error);

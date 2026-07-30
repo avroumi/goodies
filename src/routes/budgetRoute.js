@@ -1,7 +1,7 @@
 import { schemaMiddleware } from "../middlewares/schemaMiddleware.js";
 import {
   createBudgetSChema,
-  querySchemaBudget,
+  //   querySchemaBudget,
 } from "../schema/budgetSchema.js";
 import {
   createBudgetController,
@@ -35,7 +35,7 @@ router.post(
 
 router.get(
   "/",
-  schemaMiddleware(querySchemaBudget, "query"),
+  //   schemaMiddleware(querySchemaBudget, "query"),
   getAllBudgetByQueryController,
 );
 export default router;

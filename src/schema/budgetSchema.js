@@ -7,8 +7,8 @@ export const createBudgetSChema = z.object({
   allocatedAmount: z.number(),
 });
 
-export const querySchemaBudget = z.object({
-  unit: z.string().optional(),
-  month: z.string().optional(),
-  benefitType: z.string().optional(),
-});
+// export const querySchemaBudget = z.object({
+//   unit: z.string().optional(),
+//   month: z.string().optional(),
+//   benefitType: z.string().optional(),
+// });

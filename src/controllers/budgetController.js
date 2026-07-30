@@ -11,8 +11,7 @@ export const createBudgetController = async (req, res, next) => {
 
 export const getAllBudgetByQueryController = async (req, res, next) => {
   try {
-    const query = (req.parsedQuery = Object.assign({}, req.query));
-    const success = await budgetService.getAllBudgetByQueryService(query);
+    const success = await budgetService.getAllBudgetByQueryService(req.query);
     res.status(200).json(success);
   } catch (error) {
     next(error);

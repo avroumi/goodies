@@ -21,7 +21,7 @@ const createBudgetService = async (budgetData) => {
   return budget;
 };
 
-const getAllBudgetByQueryService = async (filter) => {
+const getAllBudgetByQueryService = async (filter = {}) => {
   const budgets = await getAllBudgetByQuery(filter);
   if (!budgets) {
     return budgets;

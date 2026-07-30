@@ -22,11 +22,12 @@ export const getBenefitsById = async (soldierId) => {
 };
 
 export const updateBenefit = async (soldierId, updatedData) => {
+  const { _id, ...rest } = updatedData;
   const updated = await benefits.updateOne(
     { soldierId },
-    { $set: { updatedData } },
+    { $set: { ...rest } },
   );
-  return updated.modifiedCount;
+  return await benefits.findOne(updated.insertedId);
 };
 
 // console.log(
