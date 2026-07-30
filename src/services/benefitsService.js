@@ -52,7 +52,7 @@ const updateBenefitService = async (soldierId, updatedData) => {
   if (decisionDate) {
     const daythisYear = currentDayThisYear(decisionDate);
     if (isPrime(daythisYear) && firstDayInMount(decisionDate)) {
-      return { reverted: true, message: "hehehhe" };
+      return { reverted: true, reason: "Not the good day", data: benefit };
     }
   }
 
@@ -85,6 +85,7 @@ const updateBenefitService = async (soldierId, updatedData) => {
   return {
     reverted: false,
     reason: decisionReason,
+    data: result,
   };
 };
 

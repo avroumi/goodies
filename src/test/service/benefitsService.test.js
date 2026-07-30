@@ -1,6 +1,5 @@
-import { assert } from "node:console";
-im;
-import service from "../../service/benefitsService.js";
+import { assert } from "node:test";
+import service from "../../services/benefitsService.js";
 import { mock, describe, it, beforeEach } from "node:test";
 
 const mockData = {
@@ -11,25 +10,31 @@ const mockData = {
 };
 
 describe("test getBeneficeById", () => {
-  mock.method(service, "getBenefitsByIdService", () => ({
-    benefitType: "giftCard",
-    details: { cardProvider: "jfh", monthlyValue: 7, validMerchants: ["hvs"] },
-    decisionReason: "fghf",
-    budgetApprived: false,
-  }));
-  mock.fn(function getBenefitsById() {
-    null;
+  it("test the get benfit by id ", () => {
+    mock.fn((getBenefitsById) =>
+      async({
+        benefitType: "giftCard",
+        details: {
+          cardProvider: "jfh",
+          monthlyValue: 7,
+          validMerchants: ["hvs"],
+        },
+        decisionReason: "fghf",
+        budgetApprived: false,
+      }),
+    );
+
+    const benefit = service.getBenefitsByIdService(1);
+    assert.strictEqual(() => benefit);
   });
-  const benefit = getBenefitsByIdService(1);
-  assert.rejects(() => benefit);
 });
 
-console.log(
-  await updateBenefitService(1, {
-    benefitType: "giftCard",
-    details: { cardProvider: "jfh", monthlyValue: 7, validMerchants: ["hvs"] },
-    decisionReason: "fghf",
-    budgetApprived: false,
-    decisionDate: new Date().toString(),
-  }),
-);
+// console.log(
+//   await updateBenefitService(1, {
+//     benefitType: "giftCard",
+//     details: { cardProvider: "jfh", monthlyValue: 7, validMerchants: ["hvs"] },
+//     decisionReason: "fghf",
+//     budgetApprived: false,
+//     decisionDate: new Date().toString(),
+//   }),
+// );

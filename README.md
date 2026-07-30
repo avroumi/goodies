@@ -119,4 +119,4 @@ repo
 controller
 and service
 
-Good luck for mee.
+Update: I don't know how to write controller and service tests and repo ; I'm trying, but I can't get it to work. I need time to learn—I've been at it for three hours and I just don't understand how to do it.
