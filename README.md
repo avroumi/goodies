@@ -6,6 +6,8 @@ Major changes are taking place in the army; due to budget cuts, the decision was
 Fortunately, the resulting protests had an impact, and the Minister of the Interior decided to reverse course.
 You are tasked with creating a system that: 1) allows for future changes of mind; 2) calculates the budget for each unit to track real-time spending; and 3) limits instances of overspending.
 
+How to use Docker: I created an image named "goodies"; to build it, you need to run `docker-compose up --build`.
+
 Database explanation:
 There are 3 databases:
 1/ MongoDB: stores the history of the Minister of the Interior's baffling decisions.
