@@ -9,4 +9,4 @@ app.use(express.json());
 app.use("/soldiers", benefitsRouter);
 app.use("/budget", budgetRouter);
 
-app.use("/", errorHandler);
+app.use(errorHandler);

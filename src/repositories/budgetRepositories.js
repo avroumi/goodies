@@ -36,3 +36,22 @@ export const getBudgettByid = async (budgetId) => {
   }
   return data;
 };
+
+export const getAllBudgetByQuery = async (filter) => {
+  let query = budget.select();
+  if (filter.unit) {
+    query = query.eq("unit", filter.unit);
+  }
+  if (filter.month) {
+    query = query.eq("month", filter.month);
+  }
+  if (filter.benefitType) {
+    query = query.eq("benefitType", filter.benefitType);
+  }
+
+  const { data, error, status } = await query;
+  if (error) {
+    throw new AppError(error.message, status);
+  }
+  return data;
+};

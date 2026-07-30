@@ -1,8 +1,13 @@
 import { schemaMiddleware } from "../middlewares/schemaMiddleware.js";
-import { createBudgetSChema } from "../schema/budgetSchema.js";
-import { createBudgetController } from "../controllers/budgetController.js";
+import {
+  createBudgetSChema,
+  querySchemaBudget,
+} from "../schema/budgetSchema.js";
+import {
+  createBudgetController,
+  getAllBudgetByQueryController,
+} from "../controllers/budgetController.js";
 import { Router } from "express";
-import { schemaMiddleware } from "../middlewares/schemaMiddleware.js";
 import {
   idBudgetSChema,
   createTransactionSchema,
@@ -11,9 +16,6 @@ import {
   createTransactionController,
   gettAlltransactionByIdController,
 } from "../controllers/transactionController.js";
-
-import { Router } from "express";
-
 const router = Router();
 
 router.post("/", schemaMiddleware(createBudgetSChema), createBudgetController);
@@ -31,4 +33,9 @@ router.post(
   createTransactionController,
 );
 
+router.get(
+  "/",
+  schemaMiddleware(querySchemaBudget, "query"),
+  getAllBudgetByQueryController,
+);
 export default router;

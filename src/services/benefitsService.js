@@ -52,37 +52,38 @@ const updateBenefitService = async (soldierId, updatedData) => {
   if (decisionDate) {
     const daythisYear = currentDayThisYear(decisionDate);
     if (isPrime(daythisYear) && firstDayInMount(decisionDate)) {
-      return { reverted: false, message: "hehehhe" };
+      return { reverted: true, message: "hehehhe" };
     }
   }
 
   if (benefitType === "giftCard") {
     const resultSchema = giftCArdSchema.safeParse(updatedData.details);
     if (!resultSchema.success) {
-      throw new AppError("details not compatible", 400);
+      throw new AppError(`details not compatible : ${resultSchema.error}`, 400);
     }
   }
   if (benefitType === "diningHall") {
     const resultSchema = diningHallSchema.safeParse(updatedData.details);
     if (!resultSchema.success) {
-      throw new AppError("details not compatible", 400);
+      throw new AppError(`details not compatible : ${resultSchema.error}`, 400);
     }
   }
   benefit.history[benefit.history.length - 1].endDate = decisionDate
     ? decisionDate
     : new Date().toISOString();
+
   benefit.currentBenefitType = benefitType;
   benefit.history.push({
-    startDate: new Date().toISOString(),
+    startDate: decisionDate ? decisionDate : new Date().toISOString(),
     endDate: null,
     decisionReason,
-    benifitType,
+    benefitType,
     ...rest,
   });
 
   const result = await updateBenefit(soldierId, benefit);
   return {
-    reverted: result,
+    reverted: false,
     reason: decisionReason,
   };
 };
@@ -92,3 +93,13 @@ export default {
   getBenefitsByIdService,
   updateBenefitService,
 };
+
+// console.log(
+//   await updateBenefitService(1, {
+//     benefitType: "giftCard",
+//     details: { cardProvider: "jfh", monthlyValue: 7, validMerchants: ["hvs"] },
+//     decisionReason: "fghf",
+//     budgetApprived: false,
+//     decisionDate: new Date().toString(),
+//   }),
+// );

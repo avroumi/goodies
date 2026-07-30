@@ -10,7 +10,8 @@ const gettAlltransactionByIdService = async (budgetId) => {
   if (!budget) {
     throw new AppError("budget not found ", 404);
   }
-  return await gettAlltransactionById(budgetId);
+  const result = await gettAlltransactionById(budgetId);
+  return result;
 };
 
 const createTransactionService = async (budgetId, transactionData) => {
